@@ -14,8 +14,8 @@ jobs:
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 777 ~/.ssh/id_rsa
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/wordpress
+        chmod 777 ~/.ssh/wordpress
     - name: GitHub Action Deploy to WP
       run: |
         ssh -i ~/.ssh/id_rsa ubuntu@18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
