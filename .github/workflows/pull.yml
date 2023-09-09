@@ -1,0 +1,20 @@
+name: Pull Request Git Pull
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  git_pull:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Git Pull
+        run: |
+          cd /var/www/html/wordpress/wp-content
+          git pull
