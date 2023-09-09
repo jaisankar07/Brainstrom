@@ -9,18 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-
-    - name: Set up SSH key
+    - uses: actions/checkout@v2
+    - name: GitHub Action Deploy to WP
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 777 ~/.ssh/id_rsa
+        ssh -i ~/.ssh/id_rsa ubuntu@18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
       env:
         WP_SSHG_KEY_PRIVATE: ${{ secrets.WP_SSHG_KEY_PRIVATE }}
         REMOTE_PATH: "wp-content/"
-        - name: GitHub Action Deploy to WP
-      run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
         PHP_LINT: "true"
         CACHE_CLEAR: "true"
