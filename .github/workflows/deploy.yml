@@ -9,6 +9,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: GitHub Action Deploy to WP
+      run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa  
+          ssh -i ~/.ssh/id_rsa ubuntu-18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
+
       with:
         WP_SSHG_KEY_PRIVATE: ${{ secrets.WP_SSHG_KEY_PRIVATE }}
         REMOTE_PATH: "wp-content/"
