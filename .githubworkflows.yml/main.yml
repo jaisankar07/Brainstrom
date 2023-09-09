@@ -1,0 +1,25 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: FTP Deploy
+        uses: ftpdeploy/action@v1
+        with:
+          server: brainstromforce.servepics.com
+          username: ubuntu
+          password: ${{ WP_SSH_KEY_PRIVATE }}
+          local-dir: ./
+          remote-dir: /var/www/html/wordpress/wp-content
+          PHP_LINT: TRUE
+          CACHE_CLEAR: TRUE
