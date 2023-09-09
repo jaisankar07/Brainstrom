@@ -9,7 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: GitHub Action Deploy to WP
-      uses: wp/github-action-wpe-site-deploy@v3
       with:
         WP_SSHG_KEY_PRIVATE: ${{ secrets.WP_SSHG_KEY_PRIVATE }}
         REMOTE_PATH: "wp-content/"
