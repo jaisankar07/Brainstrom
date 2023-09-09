@@ -15,8 +15,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa  
           ssh -i ~/.ssh/id_rsa ubuntu-18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
 
-      with:
+      env:
         WP_SSHG_KEY_PRIVATE: ${{ secrets.WP_SSHG_KEY_PRIVATE }}
         REMOTE_PATH: "wp-content/"
         PHP_LINT: "true"
         CACHE_CLEAR: "true"
+
+
+      
