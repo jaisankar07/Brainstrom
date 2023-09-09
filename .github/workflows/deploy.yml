@@ -1,24 +1,26 @@
 name: Deploy to production
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
+
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 777 ~/.ssh/id_rsa
     - name: GitHub Action Deploy to WP
       run: |
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa  
-          ssh -i ~/.ssh/id_rsa ubuntu@18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
-
+        ssh -i ~/.ssh/id_rsa ubuntu@18.232.70.171 'cd /var/www/html/wordpress/wp-content && git pull'
       env:
         WP_SSHG_KEY_PRIVATE: ${{ secrets.WP_SSHG_KEY_PRIVATE }}
         REMOTE_PATH: "wp-content/"
         PHP_LINT: "true"
         CACHE_CLEAR: "true"
-
-
-      
